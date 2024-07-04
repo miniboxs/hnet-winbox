@@ -5,7 +5,7 @@ import postcss from 'rollup-plugin-postcss';
 import copy from 'rollup-plugin-copy'
 
 export default {
-    input: 'src/index.js',
+    input: 'src/index.mjs',
     output: {
         file: 'dist/bundle.mjs',
         format: 'es'

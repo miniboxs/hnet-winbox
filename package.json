@@ -1,8 +1,8 @@
 {
   "name": "hnet-winbox",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
-  "main": "dist/bundle.js",
+  "main": "dist/bundle.mjs",
   "scripts": {
     "build": "rollup -c"
   },

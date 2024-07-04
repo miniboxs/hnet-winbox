@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iframe Desktop App</title>
-    <link rel="stylesheet" href="./src/assets/css/index.css">
+    <link rel="stylesheet" href="./dist/assets/css/index.css">
     <style>
         body,
         html {
@@ -21,8 +21,12 @@
 </head>
 
 <body>
+    <div>
+        <div id="test">ddd</div>
+        <div id="test2">sdaf</div>
+    </div>
     <script type="module">
-        import WindowManager from "./src/index.js"
+        import WindowManager from "./dist/bundle.mjs"
         document.addEventListener('DOMContentLoaded', () => {
             // 使用示例
             const windowManager1 = new WindowManager('Texta', {
@@ -32,20 +36,8 @@
                 height: 60,
                 background: "purple"
             });
-            new WindowManager('Texta', {
-                url: 'https://example.com',
-                icon:'https://public.aisb.top/e06e8a0ef1a018d7b6944df936f2a3c1/dK10APa.png',
-                width: 40,
-                height: 60,
-                background: "purple"
-            });
-            new WindowManager('Texta', {
-                url: 'https://example.com',
-                icon:'https://public.aisb.top/e06e8a0ef1a018d7b6944df936f2a3c1/dK1XCq7.png',
-                width: 40,
-                height: 60,
-                background: "purple"
-            });
+
+            console.log(windowManager1);
         });
     </script>
 </body>

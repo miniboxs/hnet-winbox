@@ -1,12 +1,11 @@
 /**
  * Window Manager
  * @author: jesmora
- * @version: 1.0.0
+ * @version: 0.0.1
  * @license: MIT
  * @description: Window Manager for the browser
  * @copyright: 2024
  */
-
 export const eventOptionsPassive = { "capture": true, "passive": true };
 export const get = {
     byId: function (id) {
@@ -61,6 +60,7 @@ class WindowManager {
         url, icon, width, height, x, y, background, oncreate, onfocus, onblur, onresize, onfullscreen, onminimize, onmaximize, onrestore, onmove, onclose
     }) {
         const windowElement = document.createElement('div');
+        windowElement.id = this.windId;
         windowElement.classList.add('hnet-window');
         windowElement.dataset.id = this.windId;
         windowElement.style.width = `${width}%`;

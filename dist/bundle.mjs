@@ -38,12 +38,11 @@ function _toPropertyKey(t) {
 /**
  * Window Manager
  * @author: jesmora
- * @version: 1.0.0
+ * @version: 0.0.1
  * @license: MIT
  * @description: Window Manager for the browser
  * @copyright: 2024
  */
-
 var eventOptionsPassive = {
   "capture": true,
   "passive": true
@@ -132,6 +131,7 @@ var WindowManager = /*#__PURE__*/function () {
         _ref2.onmove;
         _ref2.onclose;
       var windowElement = document.createElement('div');
+      windowElement.id = this.windId;
       windowElement.classList.add('hnet-window');
       windowElement.dataset.id = this.windId;
       windowElement.style.width = "".concat(width, "%");
