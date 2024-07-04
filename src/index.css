@@ -1,0 +1,164 @@
+/* 窗口样式 */
+.hnet-window {
+    position: absolute;
+    border: 1px solid #ccc;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border: none;
+}
+
+.hnet-window-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: #2e2e2e;
+    color: #fff;
+    cursor: move;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.hnet-window-header .hnet-buttons {
+    display: flex;
+}
+
+.hnet-window-header .hnet-buttons button {
+    background: none;
+    border: none;
+    color: #fff;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.hnet-window-content {
+    height: calc(100% - 40px);
+}
+
+.hnet-hidden {
+    display: none;
+    transition: width 0.5s, height 0.5s;
+}
+
+.hnet-maximized {
+    width: 100% !important;
+    height: calc(100% - 40px) !important;
+    top: 0 !important;
+    left: 0 !important;
+}
+
+.hnet-window .hnet-resizeL,
+.hnet-window .hnet-resizeT,
+.hnet-window .hnet-resizeR,
+.hnet-window .hnet-resizeB,
+.hnet-window .hnet-resizeLT,
+.hnet-window .hnet-resizeTR,
+.hnet-window .hnet-resizeLB {
+    position: absolute;
+    background: #000;
+    overflow: hidden;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.hnet-window .hnet-resizeL,
+.hnet-window .hnet-resizeR {
+    top: 0;
+    width: 5px;
+    height: 100%;
+    cursor: w-resize;
+}
+
+.hnet-window .hnet-resizeR {
+    right: 0;
+}
+
+.hnet-window .hnet-resizeT,
+.hnet-window .hnet-resizeB {
+    width: 100%;
+    height: 5px;
+    cursor: n-resize;
+}
+
+.hnet-window .hnet-resizeT {
+    top: 0;
+}
+
+.hnet-window .hnet-resizeB {
+    bottom: 0;
+}
+
+.hnet-window .hnet-resizeLT,
+.hnet-window .hnet-resizeTR,
+.hnet-window .hnet-resizeLB {
+    width: 8px;
+    height: 8px;
+    background: #FF0;
+}
+
+.hnet-window .hnet-resizeBR {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    cursor: nw-resize;
+    /* background: url(images/resize.png) no-repeat; */
+}
+
+.hnet-window .hnet-resizeLT {
+    top: 0;
+    left: 0;
+    cursor: nw-resize;
+}
+
+.hnet-window .hnet-resizeTR {
+    top: 0;
+    right: 0;
+    cursor: ne-resize;
+}
+
+.hnet-window .hnet-resizeLB {
+    left: 0;
+    bottom: 0;
+    cursor: ne-resize;
+}
+
+.hnet-ads {
+    color: #fff;
+}
+
+iframe {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+::-webkit-scrollbar {
+    height: 2px;
+    width: 0px;
+    /* 设置滚动条宽度 */
+}
+
+/* 定义滚动条轨道 */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    /* 设置滚动条轨道背景颜色 */
+}
+
+/* 定义滚动条滑块 */
+::-webkit-scrollbar-thumb {
+    background: #dddddd;
+    /* 设置滚动条滑块颜色 */
+}
+
+/* 定义鼠标悬停时滚动条滑块的样式 */
+::-webkit-scrollbar-thumb:hover {
+    background: #fff;
+    /* 设置鼠标悬停时滚动条滑块颜色 */
+}

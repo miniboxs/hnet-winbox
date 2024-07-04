@@ -240,22 +240,25 @@
             }
         };
         class WindowManager {
-            constructor(title, { url, width, height, x, y, background }) {
-                this.desktop = document.body //document.getElementById('desktop');
-                this.taskbar = document.getElementById('taskbar');
+            static windowCounter = 0;
+            constructor(title, { url, width, height, x, y, background, ads }) {
+                this.desktop = document.body
+                this.windId = `window-${WindowManager.windowCounter++}`;
+                this.index = WindowManager.windowCounter;
+                this.id = WindowManager.windowCounter;
                 this.dragMinWidth = 400;
                 this.dragMinHeight = 50;
 
-                this.windowCounter = 0;
-                this.windowId = `window-${this.windowCounter++}`;
                 this.defaultWidth = width || 40;
                 this.defaultHeight = height || 60;
                 this.x = x || 50
                 this.y = y || 50
                 this.background = background || "#fff";
+                this.adsText = ads || null
+                this.url = url || null
 
                 this.createWindow(title, {
-                    url,
+                    url: this.url,
                     width: this.defaultWidth,
                     height: this.defaultHeight,
                     x: this.x,
@@ -264,14 +267,16 @@
                 })
             }
 
+            /**
+             * @param {string} title
+             * @param {object} options
+             */
             createWindow(title, {
                 url, width, height, x, y, background, oncreate, onfocus, onblur, onresize, onfullscreen, onminimize, onmaximize, onrestore, onmove, onclose
             }) {
-
-
                 const windowElement = document.createElement('div');
                 windowElement.classList.add('hnet-window');
-                windowElement.dataset.id = this.windowId;
+                windowElement.dataset.id = this.windId;
                 windowElement.style.width = `${width}%`;
                 windowElement.style.height = `${height}%`;
 
@@ -299,8 +304,7 @@
 
                 this.desktop.appendChild(windowElement);
 
-                const taskbarItem = this.createTaskbarItem(this.windowId, title);
-                this.addEventListeners(windowElement, taskbarItem);
+                this.addEventListeners(windowElement);
 
                 // 计算并设置初始位置（垂直居中）
                 const desktopRect = this.desktop.getBoundingClientRect();
@@ -310,19 +314,6 @@
 
                 windowElement.style.top = `${topPosition}px`;
                 windowElement.style.left = `${leftPosition}px`;
-            }
-
-            /**
-             * 创建任务栏图标
-             */
-            createTaskbarItem(windowId, title) {
-                const taskbarItem = document.createElement('div');
-                taskbarItem.classList.add('taskbar-item');
-                taskbarItem.dataset.id = windowId;
-                taskbarItem.textContent = title[0]; // 使用标题的首字母作为图标
-
-                this.taskbar.appendChild(taskbarItem);
-                return taskbarItem;
             }
 
             /**
@@ -336,10 +327,9 @@
 
                 minimizeButton.addEventListener('click', () => this.minimizeWindow(windowElement));
                 maximizeButton.addEventListener('click', () => this.maximizeWindow(windowElement));
-                closeButton.addEventListener('click', () => this.closeWindow(windowElement, taskbarItem));
+                closeButton.addEventListener('click', () => this.closeWindow(windowElement));
                 header.addEventListener('mousedown', (e) => this.makeDraggable(e, windowElement));
                 windowElement.addEventListener('click', () => this.bringToFront(windowElement));
-                taskbarItem.addEventListener('click', () => this.toggleWindow(windowElement));
 
                 var oL = get.byClass("hnet-resizeL", windowElement)[0];
                 var oT = get.byClass("hnet-resizeT", windowElement)[0];
@@ -350,15 +340,15 @@
                 var oBR = get.byClass("hnet-resizeBR", windowElement)[0];
                 var oLB = get.byClass("hnet-resizeLB", windowElement)[0];
                 //四角
-                this.resize(oLT, windowElement, false, true, false, false);
-                this.resize(oTR, windowElement, false, true, false, false);
-                this.resize(oBR, windowElement, false, false, false, false);
-                this.resize(oLB, windowElement, true, false, false, false);
+                this.resizeWindow(oLT, windowElement, false, true, false, false);
+                this.resizeWindow(oTR, windowElement, false, true, false, false);
+                this.resizeWindow(oBR, windowElement, false, false, false, false);
+                this.resizeWindow(oLB, windowElement, true, false, false, false);
                 //四边
-                this.resize(oL, windowElement, true, false, false, true);
-                this.resize(oT, windowElement, false, true, true, false);
-                this.resize(oR, windowElement, false, false, false, true);
-                this.resize(oB, windowElement, false, false, true, false);
+                this.resizeWindow(oL, windowElement, true, false, false, true);
+                this.resizeWindow(oT, windowElement, false, true, true, false);
+                this.resizeWindow(oR, windowElement, false, false, false, true);
+                this.resizeWindow(oB, windowElement, false, false, true, false);
             }
 
             /***
@@ -384,7 +374,7 @@
              */
             maximizeWindow(windowElement) {
                 const isMaximized = windowElement.classList.toggle('maximized');
-                windowElement.style.transition = 'width 0.5s, height 0.5s';
+                windowElement.style.transition = 'all 0.5s';
                 if (isMaximized) {
                     // 保存当前大小和位置，以便之后恢复
                     windowElement.dataset.prevStyle = JSON.stringify({
@@ -402,7 +392,6 @@
                         left: '0'
                     });
                 } else {
-
                     // 恢复到之前的大小和位置
                     const prevStyle = JSON.parse(windowElement.dataset.prevStyle || '{}');
 
@@ -428,11 +417,11 @@
             /***
              * 关闭窗口
              * @param {HTMLElement} windowElement
-             * @param {HTMLElement} taskbarItem
              */
-            closeWindow(windowElement, taskbarItem) {
+            closeWindow(windowElement) {
                 windowElement.remove();
-                // taskbarItem.remove();
+                WindowManager.windowCounter--;
+                if (WindowManager.windowCounter <= 0) return
             }
 
             /**
@@ -441,6 +430,7 @@
              * @param {HTMLElement} windowElement
              */
             makeDraggable(e, windowElement) {
+                windowElement.style.transition = 'none';
                 let lastX = 0, lastY = 0;
                 if (e.target.closest('.buttons')) return; // 如果点击的是按钮，不执行拖动
                 // 鼠标按下时记录当前鼠标位置和窗口位置
@@ -481,7 +471,21 @@
                 return false
             }
 
-            resize(handle, oParent, isLeft, isTop, lockX, lockY) {
+
+            /***
+             * 窗口缩放
+             * @param {HTMLElement} handle
+             * @param {HTMLElement} oParent
+             * @param {boolean} isLeft
+             * @param {boolean} isTop
+             * @param {boolean} lockX
+             * @param {boolean} lockY
+             */
+            resizeWindow(handle, oParent, isLeft, isTop, lockX, lockY) {
+                const content = document.querySelector(".hnet-window-content")
+                const ads = document.createElement("div")
+                ads.className = "hnet-ads"
+                content.appendChild(ads)
                 handle.onmousedown = (event) => {
                     let disX = event.clientX - handle.offsetLeft;
                     let disY = event.clientY - handle.offsetTop;
@@ -493,6 +497,10 @@
                     document.onmousemove = (event) => {
                         oParent.style.transition = "none"
                         iframe.style.display = 'none';
+
+                        ads.style.display = this.adsText ? "block" : "none"
+                        ads.innerHTML = this.adsText
+
                         let iL = event.clientX - disX;
                         let iT = event.clientY - disY;
                         let maxW = document.documentElement.clientWidth - oParent.offsetLeft - 2;
@@ -507,11 +515,11 @@
                         iH > maxH && (iH = maxH);
                         lockY || (oParent.style.height = iH + "px");
                         if ((isLeft && iW == this.dragMinWidth) || (isTop && iH == this.dragMinHeight)) document.onmousemove = null;
-                        console.log(this.dragMinWidth, this.dragMinHeight);
                         return false;
                     };
                     document.onmouseup = function () {
                         iframe.style.display = 'block';
+                        ads.style.display = 'none'
                         document.onmousemove = null;
                         document.onmouseup = null;
                     };
@@ -534,8 +542,12 @@
              * @param {HTMLElement} windowElement
              */
             toggleWindow(windowElement) {
-                this.bringToFront(windowElement);
-                windowElement.classList.toggle('hnet-hidden');
+                if (windowElement.classList.contains('hnet-hidden')) {
+                    windowElement.classList.remove('hnet-hidden');
+                    this.bringToFront(windowElement);
+                } else {
+                    windowElement.classList.add('hnet-hidden');
+                }
             }
         }
 
