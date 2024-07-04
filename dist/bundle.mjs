@@ -136,7 +136,7 @@ var WindowManager = /*#__PURE__*/function () {
       windowElement.dataset.id = this.windId;
       windowElement.style.width = "".concat(width, "%");
       windowElement.style.height = "".concat(height, "%");
-      windowElement.innerHTML = "\n                <div class=\"hnet-window-header\" style=\"background: ".concat(background, ";\">\n                    <div class=\"hnet-header-box\">\n                        <span class=\"hnet-title\">").concat(title, "</span>\n                    </div>\n                    <div class=\"hnet-buttons\">\n                        <div class=\"hnet-minimize\"></div>\n                        <div class=\"hnet-maximize\"></div>\n                        <div class=\"hnet-close\"></div>\n                    </div>\n                </div>\n                <div class=\"hnet-resizeL\"></div>\n                <div class=\"hnet-resizeT\"></div>\n                <div class=\"hnet-resizeR\"></div>\n                <div class=\"hnet-resizeB\"></div>\n                <div class=\"hnet-resizeLT\"></div>\n                <div class=\"hnet-resizeTR\"></div>\n                <div class=\"hnet-resizeBR\"></div>\n                <div class=\"hnet-resizeLB\"></div>\n                <div class=\"hnet-window-content\">\n                    <iframe src=\"").concat(url, "\" frameborder=\"0\" loading=\"lazy\" referrerpolicy=\"no-referrer\" allowfullscreen width=\"100%\" height=\"100%\"></iframe>\n                </div>\n                ");
+      windowElement.innerHTML = "\n                <div class=\"hnet-window-header\" style=\"background: ".concat(background, ";\">\n                    <div class=\"hnet-header-box\">\n                         ").concat(icon ? "<img class=\"hnet-icon\" src=\"".concat(icon, "\" alt=\"\" />") : '', "\n                        <span class=\"hnet-title\">").concat(title, "</span>\n                    </div>\n                    <div class=\"hnet-buttons\">\n                        <div class=\"hnet-minimize\"></div>\n                        <div class=\"hnet-maximize\"></div>\n                        <div class=\"hnet-close\"></div>\n                    </div>\n                </div>\n                <div class=\"hnet-resizeL\"></div>\n                <div class=\"hnet-resizeT\"></div>\n                <div class=\"hnet-resizeR\"></div>\n                <div class=\"hnet-resizeB\"></div>\n                <div class=\"hnet-resizeLT\"></div>\n                <div class=\"hnet-resizeTR\"></div>\n                <div class=\"hnet-resizeBR\"></div>\n                <div class=\"hnet-resizeLB\"></div>\n                <div class=\"hnet-window-content\">\n                    <iframe src=\"").concat(url, "\" frameborder=\"0\" loading=\"lazy\" referrerpolicy=\"no-referrer\" allowfullscreen width=\"100%\" height=\"100%\"></iframe>\n                </div>\n                ");
       this.desktop.appendChild(windowElement);
       this.addEventListeners(windowElement);
 
@@ -147,15 +147,6 @@ var WindowManager = /*#__PURE__*/function () {
       var leftPosition = (desktopRect.width - windowRect.width) / 2;
       windowElement.style.top = "".concat(topPosition, "px");
       windowElement.style.left = "".concat(leftPosition, "px");
-
-      // 是否存在icon
-      var headerBox = document.querySelector('.hnet-header-box');
-      if (icon) {
-        var iconElement = document.createElement('img');
-        iconElement.classList.add('hnet-icon');
-        iconElement.src = icon;
-        headerBox.insertBefore(iconElement, headerBox.firstChild);
-      }
     }
 
     /**

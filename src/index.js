@@ -69,6 +69,7 @@ class WindowManager {
         windowElement.innerHTML = `
                 <div class="hnet-window-header" style="background: ${background};">
                     <div class="hnet-header-box">
+                         ${icon ? `<img class="hnet-icon" src="${icon}" alt="" />` : ''}
                         <span class="hnet-title">${title}</span>
                     </div>
                     <div class="hnet-buttons">
@@ -102,15 +103,6 @@ class WindowManager {
 
         windowElement.style.top = `${topPosition}px`;
         windowElement.style.left = `${leftPosition}px`;
-
-        // 是否存在icon
-        const headerBox = document.querySelector('.hnet-header-box');
-        if (icon) {
-            const iconElement = document.createElement('img');
-            iconElement.classList.add('hnet-icon');
-            iconElement.src = icon;
-            headerBox.insertBefore(iconElement, headerBox.firstChild);
-        }
     }
 
     /**
