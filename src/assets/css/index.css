@@ -35,7 +35,7 @@
 .hnet-icon {
     width: 20px;
     height: 20px;
-    object-fit: cover;
+    object-fit: contain;
     margin-right: 8px;
     border-radius: 2px;
 }
