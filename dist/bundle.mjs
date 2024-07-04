@@ -141,12 +141,7 @@ var WindowManager = /*#__PURE__*/function () {
       this.addEventListeners(windowElement);
 
       // 计算并设置初始位置（垂直居中）
-      var desktopRect = this.desktop.getBoundingClientRect();
-      var windowRect = windowElement.getBoundingClientRect();
-      var topPosition = (desktopRect.height - windowRect.height) / 2;
-      var leftPosition = (desktopRect.width - windowRect.width) / 2;
-      windowElement.style.top = "".concat(topPosition, "px");
-      windowElement.style.left = "".concat(leftPosition, "px");
+      this.positonWindow(windowElement);
     }
 
     /**
@@ -172,8 +167,14 @@ var WindowManager = /*#__PURE__*/function () {
       header.addEventListener('mousedown', function (e) {
         return _this.makeDraggable(e, windowElement);
       });
+      header.addEventListener('dblclick', function (e) {
+        return _this.maximizeWindow(windowElement);
+      });
       windowElement.addEventListener('click', function () {
         return _this.bringToFront(windowElement);
+      });
+      window.addEventListener("resize", function () {
+        return _this.positonWindow(windowElement);
       });
       var oL = get.byClass("hnet-resizeL", windowElement)[0];
       var oT = get.byClass("hnet-resizeT", windowElement)[0];
@@ -193,6 +194,21 @@ var WindowManager = /*#__PURE__*/function () {
       this.resizeWindow(oT, windowElement, false, true, true, false);
       this.resizeWindow(oR, windowElement, false, false, false, true);
       this.resizeWindow(oB, windowElement, false, false, true, false);
+    }
+
+    /**
+     * 窗口定位
+     */
+  }, {
+    key: "positonWindow",
+    value: function positonWindow(windowElement) {
+      var desktopRect = this.desktop.getBoundingClientRect();
+      var windowRect = windowElement.getBoundingClientRect();
+      var topPosition = (desktopRect.height - windowRect.height) / 2;
+      var leftPosition = (desktopRect.width - windowRect.width) / 2;
+      windowElement.style.transition = 'none';
+      windowElement.style.top = "".concat(topPosition, "px");
+      windowElement.style.left = "".concat(leftPosition, "px");
     }
 
     /***

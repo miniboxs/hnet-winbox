@@ -96,13 +96,7 @@ class WindowManager {
         this.addEventListeners(windowElement);
 
         // 计算并设置初始位置（垂直居中）
-        const desktopRect = this.desktop.getBoundingClientRect();
-        const windowRect = windowElement.getBoundingClientRect();
-        const topPosition = (desktopRect.height - windowRect.height) / 2;
-        const leftPosition = (desktopRect.width - windowRect.width) / 2;
-
-        windowElement.style.top = `${topPosition}px`;
-        windowElement.style.left = `${leftPosition}px`;
+        this.positonWindow(windowElement)
     }
 
     /**
@@ -118,7 +112,9 @@ class WindowManager {
         maximizeButton.addEventListener('click', () => this.maximizeWindow(windowElement));
         closeButton.addEventListener('click', () => this.closeWindow(windowElement));
         header.addEventListener('mousedown', (e) => this.makeDraggable(e, windowElement));
+        header.addEventListener('dblclick', (e) => this.maximizeWindow(windowElement));
         windowElement.addEventListener('click', () => this.bringToFront(windowElement));
+        window.addEventListener("resize", () => this.positonWindow(windowElement))
 
         var oL = get.byClass("hnet-resizeL", windowElement)[0];
         var oT = get.byClass("hnet-resizeT", windowElement)[0];
@@ -138,6 +134,20 @@ class WindowManager {
         this.resizeWindow(oT, windowElement, false, true, true, false);
         this.resizeWindow(oR, windowElement, false, false, false, true);
         this.resizeWindow(oB, windowElement, false, false, true, false);
+    }
+
+    /**
+     * 窗口定位
+     */
+    positonWindow(windowElement) {
+        const desktopRect = this.desktop.getBoundingClientRect();
+        const windowRect = windowElement.getBoundingClientRect();
+        const topPosition = (desktopRect.height - windowRect.height) / 2;
+        const leftPosition = (desktopRect.width - windowRect.width) / 2;
+
+        windowElement.style.transition = 'none';
+        windowElement.style.top = `${topPosition}px`;
+        windowElement.style.left = `${leftPosition}px`;
     }
 
     /***
