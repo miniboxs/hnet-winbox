@@ -68,9 +68,9 @@ class WindowManager {
                 <div class="hnet-window-header" style="background: ${background};">
                     <span class="hnet-title">${title}</span>
                     <div class="hnet-buttons">
-                    <button class="hnet-minimize">_</button>
-                    <button class="hnet-maximize">[]</button>
-                    <button class="hnet-close">X</button>
+                    <button class="hnet-minimize"></button>
+                    <button class="hnet-maximize"></button>
+                    <button class="hnet-close"></button>
                     </div>
                 </div>
                 <div class="hnet-resizeL"></div>

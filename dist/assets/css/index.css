@@ -128,6 +128,18 @@
     cursor: ne-resize;
 }
 
+.hnet-minimize {
+    background-image: url(../img/min.svg);
+}
+
+.hnet-maximize {
+    background-image: url(../img/max.svg);
+}
+
+.hnet-close {
+    background-image: url(../img/close.svg);
+}
+
 .hnet-ads {
     color: #fff;
 }
