@@ -296,17 +296,17 @@ var WindowManager = /*#__PURE__*/function () {
   }, {
     key: "makeDraggable",
     value: function makeDraggable(e, windowElement) {
-      windowElement.style.transition = 'none';
+      e.preventDefault();
       var lastX = 0,
         lastY = 0;
       if (e.target.closest('.buttons')) return; // 如果点击的是按钮，不执行拖动
       // 鼠标按下时记录当前鼠标位置和窗口位置
       lastX = e.clientX - windowElement.offsetLeft;
       lastY = e.clientY - windowElement.offsetTop;
-      windowElement.getBoundingClientRect();
 
       // 鼠标移动时更新窗口位置
       document.onmousemove = function (e) {
+        windowElement.style.transition = 'none';
         var dx = e.clientX - lastX;
         var dy = e.clientY - lastY;
         var maxL = document.documentElement.clientWidth - windowElement.offsetWidth;
@@ -321,14 +321,12 @@ var WindowManager = /*#__PURE__*/function () {
         windowElement.style.top = dy + "px";
         return false;
       };
-      document.onmouseup = function () {
+      document.onmouseup = function (e) {
         document.onmousemove = null;
         document.onmouseup = null;
         this.releaseCapture && this.releaseCapture();
       };
       this.setCapture && this.setCapture();
-      // 阻止默认行为，如文本选择等
-      e.preventDefault();
       return false;
     }
 
