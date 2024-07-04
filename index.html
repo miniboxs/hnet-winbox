@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iframe Desktop App</title>
-    <link rel="stylesheet" href="./dist/assets/css/index.css">
+    <link rel="stylesheet" href="./src/assets/css/index.css">
     <style>
         body,
         html {
@@ -21,31 +21,17 @@
 </head>
 
 <body>
-    <div id="desktop">
-        <!-- 窗口会被动态添加到这里 -->
-    </div>
-
-    <div id="taskbar">
-        <!-- 应用图标会被动态添加到这里 -->
-    </div>
     <script type="module">
-        import WindowManager from "./dist/bundle.mjs"
+        import WindowManager from "./src/index.js"
         document.addEventListener('DOMContentLoaded', () => {
             // 使用示例
-            const windowManager1 = new WindowManager('My Window', {
+            const windowManager1 = new WindowManager('Texta', {
                 url: 'https://example.com',
+                icon:'https://public.aisb.top/e06e8a0ef1a018d7b6944df936f2a3c1/dK10APa.png',
                 width: 40,
                 height: 60,
                 background: "purple"
             });
-
-            // const windowManager2 = new WindowManager('HideIP Window', {
-            //     url: 'https://hideip.network',
-            //     width: 40,
-            //     height: 60,
-            // });
-            // windowManager.createWindow('https://www.example.com', 'Example Window');
-            // windowManager.createWindow('https://hideip.network', 'HideIP Window');
         });
     </script>
 </body>

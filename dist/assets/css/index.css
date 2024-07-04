@@ -24,14 +24,20 @@
 
 .hnet-window-header .hnet-buttons {
     display: flex;
+    gap: 0 10px;
 }
 
-.hnet-window-header .hnet-buttons button {
-    background: none;
-    border: none;
-    color: #fff;
-    margin-left: 5px;
-    cursor: pointer;
+.hnet-header-box {
+    display: flex;
+    align-items: center;
+}
+
+.hnet-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+    margin-right: 8px;
+    border-radius: 2px;
 }
 
 .hnet-window-content {
@@ -130,14 +136,32 @@
 
 .hnet-minimize {
     background-image: url(../img/min.svg);
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: default;
 }
 
 .hnet-maximize {
     background-image: url(../img/max.svg);
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: default;
 }
 
 .hnet-close {
     background-image: url(../img/close.svg);
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: default;
 }
 
 .hnet-ads {
@@ -153,7 +177,7 @@ iframe {
 
 ::-webkit-scrollbar {
     height: 2px;
-    width: 0px;
+    width: 1px;
     /* 设置滚动条宽度 */
 }
 

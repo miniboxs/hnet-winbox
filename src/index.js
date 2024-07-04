@@ -25,7 +25,7 @@ export const get = {
 };
 class WindowManager {
     static windowCounter = 0;
-    constructor(title, { url, width, height, x, y, background, ads }) {
+    constructor(title, { url = null, icon = null, width = 40, height = 60, x = 50, y = 50, background = "#000", ads = null }) {
         this.desktop = document.body
         this.windId = `window-${WindowManager.windowCounter++}`;
         this.index = WindowManager.windowCounter;
@@ -33,16 +33,18 @@ class WindowManager {
         this.dragMinWidth = 400;
         this.dragMinHeight = 50;
 
-        this.defaultWidth = width || 40;
-        this.defaultHeight = height || 60;
-        this.x = x || 50
-        this.y = y || 50
-        this.background = background || "#fff";
-        this.adsText = ads || null
-        this.url = url || null
+        this.defaultWidth = width;
+        this.defaultHeight = height;
+        this.x = x
+        this.y = y
+        this.background = background;
+        this.adsText = ads
+        this.url = url
+        this.icon = icon
 
         this.createWindow(title, {
             url: this.url,
+            icon: this.icon,
             width: this.defaultWidth,
             height: this.defaultHeight,
             x: this.x,
@@ -56,7 +58,7 @@ class WindowManager {
      * @param {object} options
      */
     createWindow(title, {
-        url, width, height, x, y, background, oncreate, onfocus, onblur, onresize, onfullscreen, onminimize, onmaximize, onrestore, onmove, onclose
+        url, icon, width, height, x, y, background, oncreate, onfocus, onblur, onresize, onfullscreen, onminimize, onmaximize, onrestore, onmove, onclose
     }) {
         const windowElement = document.createElement('div');
         windowElement.classList.add('hnet-window');
@@ -66,11 +68,13 @@ class WindowManager {
 
         windowElement.innerHTML = `
                 <div class="hnet-window-header" style="background: ${background};">
-                    <span class="hnet-title">${title}</span>
+                    <div class="hnet-header-box">
+                        <span class="hnet-title">${title}</span>
+                    </div>
                     <div class="hnet-buttons">
-                    <button class="hnet-minimize"></button>
-                    <button class="hnet-maximize"></button>
-                    <button class="hnet-close"></button>
+                        <div class="hnet-minimize"></div>
+                        <div class="hnet-maximize"></div>
+                        <div class="hnet-close"></div>
                     </div>
                 </div>
                 <div class="hnet-resizeL"></div>
@@ -98,6 +102,15 @@ class WindowManager {
 
         windowElement.style.top = `${topPosition}px`;
         windowElement.style.left = `${leftPosition}px`;
+
+        // 是否存在icon
+        const headerBox = document.querySelector('.hnet-header-box');
+        if (icon) {
+            const iconElement = document.createElement('img');
+            iconElement.classList.add('hnet-icon');
+            iconElement.src = icon;
+            headerBox.insertBefore(iconElement, headerBox.firstChild);
+        }
     }
 
     /**
